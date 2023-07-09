@@ -87,6 +87,7 @@ def id_validation(result):
 class Pets(Resource):
 
     # Get one pet
+    #@app.route('/api/pet/<string:id>')
     def get(self, id):
 
         if id:
@@ -174,7 +175,7 @@ class Pets(Resource):
 
 
 class AllPets(Resource):
-    
+    #@app.route('/api/pets/<string:id>')
     def get(self, type):
         if type != 'All':
             all_pets = mongo.db.pets.find({'type': type})
@@ -188,6 +189,7 @@ class AllPets(Resource):
 class Users(Resource):
 
     # @jwt_required()
+    #@app.route('/api/user')
     def get(self):
         all_users = mongo.db.users.find()
         response = json_util.dumps(all_users)
@@ -253,8 +255,10 @@ class Users(Resource):
         else:
             return {'msg': 'Error - id not found'}, 404
 
+
+
 class Login(Resource):
-    
+    #@app.route('/api/login')
     def post(self):
         email = request.json['email']
         password = request.json['password']
