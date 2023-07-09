@@ -6,7 +6,7 @@ from bson import json_util
 from bson.objectid import ObjectId
 from flask import Flask, request, Response
 from flask_bcrypt import Bcrypt
-from flask_jwt import JWT, jwt_required
+#from flask_jwt import JWT, jwt_required
 
 import json
 import os
@@ -67,8 +67,8 @@ def identity(payload):
     user = mongo.db.users.find_one({'_id': ObjectId(user_id)})
     return user
 
-jwt = JWT(app, authenticate, identity)
-app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=1)
+# jwt = JWT(app, authenticate, identity)
+# app.config['JWT_EXPIRATION_DELTA'] = datetime.timedelta(days=1)
 
 # VALIDATIONS
 def id_validation(result):
@@ -97,7 +97,7 @@ class Pets(Resource):
             return {'msg': 'Error - id not found'}, 404
 
     # Create a pet
-    @jwt_required()
+    # @jwt_required()
     def post(self):
 
         name = request.json['name']
@@ -136,7 +136,7 @@ class Pets(Resource):
 
         
     # Delete a pet
-    @jwt_required()
+    # @jwt_required()
     def delete(self, id):
         result = mongo.db.pets.find_one({'_id': ObjectId(id)})
         result_id = id_validation(result)
@@ -151,7 +151,7 @@ class Pets(Resource):
             return {'msg': 'Error - id not found'}, 404
     
     # Update a pet
-    @jwt_required()
+    # @jwt_required()
     def put(self, id):
         
         name = request.json['name']
@@ -187,7 +187,7 @@ class AllPets(Resource):
 
 class Users(Resource):
 
-    @jwt_required()
+    # @jwt_required()
     def get(self):
         all_users = mongo.db.users.find()
         response = json_util.dumps(all_users)
@@ -239,7 +239,7 @@ class Users(Resource):
         else:
             return {'msg': 'Please fill all required fields.'}
     
-    @jwt_required()
+    # @jwt_required()
     def delete(self, id):
         result = mongo.db.users.find_one({'_id': ObjectId(id)})
         result_id = id_validation(result)

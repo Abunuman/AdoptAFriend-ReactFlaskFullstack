@@ -18,5 +18,8 @@ EXPOSE ${PORT}
 
 RUN apt-get update && apt-get install -y curl
 
-CMD ["python3", "-m", "flask", "run", "--host=0.0.0.0" "--port=4567"]
+COPY ./external.sh /
 
+RUN chmod +x /external.sh
+
+ENTRYPOINT ["/external.sh"]
